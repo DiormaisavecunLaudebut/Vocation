@@ -2,4 +2,5 @@ Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/ra
 # Vocation
 
 ----------- DATABASE SCHEMA ---------------
+
 https://kitt.lewagon.com/db/2785
