@@ -10,10 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_03_163545) do
+ActiveRecord::Schema.define(version: 2019_10_03_185417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "details", force: :cascade do |t|
+    t.string "definition"
+    t.string "synonyms", array: true
+    t.string "nature"
+    t.string "examples", array: true
+    t.string "antonyms", array: true
+    t.bigint "word_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["word_id"], name: "index_details_on_word_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string "title"
+    t.integer "week"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_lists_on_user_id"
+  end
+
+  create_table "user_words", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "word_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_words_on_user_id"
+    t.index ["word_id"], name: "index_user_words_on_word_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +57,26 @@ ActiveRecord::Schema.define(version: 2019_10_03_163545) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "word_lists", force: :cascade do |t|
+    t.bigint "word_id"
+    t.bigint "list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_word_lists_on_list_id"
+    t.index ["word_id"], name: "index_word_lists_on_word_id"
+  end
+
+  create_table "words", force: :cascade do |t|
+    t.string "entry"
+    t.string "translation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "details", "words"
+  add_foreign_key "lists", "users"
+  add_foreign_key "user_words", "users"
+  add_foreign_key "user_words", "words"
+  add_foreign_key "word_lists", "lists"
+  add_foreign_key "word_lists", "words"
 end
