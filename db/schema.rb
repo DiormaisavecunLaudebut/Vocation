@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_185417) do
 
   create_table "words", force: :cascade do |t|
     t.string "entry"
-    t.string "translation"
+    t.string "translation", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
