@@ -14,6 +14,9 @@ url = "https://wordsapiv1.p.mashape.com/words/#{word.entry}"
 callback = HTTP.get(url, headers: headers)
 response = JSON.parse(callback)
 
+response['pronunciation'] = word.pronunciation
+response['frequency'] = word.frequency
+
 response['results'].each do |result|
   detail = Detail.new
   detail.word = word
